@@ -29,11 +29,11 @@ export function assertHostedConfigured(config = getHostedConfig()): void {
   }
 }
 
-export async function hostedSearchAssets(filters: SearchFilters, config = getHostedConfig()): Promise<unknown[]> {
+export async function hostedSearchAssets(filters: SearchFilters, config = getHostedConfig()): Promise<Record<string, unknown>> {
   return hostedPost("/v1/search", filters, config);
 }
 
-export async function hostedSearchAssetFiles(filters: FileSearchFilters, config = getHostedConfig()): Promise<unknown[]> {
+export async function hostedSearchAssetFiles(filters: FileSearchFilters, config = getHostedConfig()): Promise<Record<string, unknown>> {
   return hostedPost("/v1/files/search", filters, config);
 }
 
@@ -65,7 +65,21 @@ export async function hostedListLicenses(config = getHostedConfig()): Promise<un
   return payload;
 }
 
-async function hostedPost(path: string, body: object, config: HostedConfig): Promise<unknown[]> {
+export async function hostedGetCatalogOptions(config = getHostedConfig()): Promise<unknown> {
+  assertHostedConfigured(config);
+  const response = await fetch(new URL("/v1/catalog/options", config.baseUrl), {
+    headers: {
+      authorization: `Bearer ${config.apiKey}`,
+    },
+  });
+  const payload = (await response.json()) as { error?: string };
+  if (!response.ok) {
+    throw new Error(payload.error ?? `Asset Hub request failed with ${response.status}`);
+  }
+  return payload;
+}
+
+async function hostedPost(path: string, body: object, config: HostedConfig): Promise<Record<string, unknown>> {
   assertHostedConfigured(config);
   const response = await fetch(new URL(path, config.baseUrl), {
     method: "POST",
@@ -75,11 +89,11 @@ async function hostedPost(path: string, body: object, config: HostedConfig): Pro
     },
     body: JSON.stringify(sanitizeBody(body as Record<string, unknown>)),
   });
-  const payload = (await response.json()) as { results?: unknown[]; error?: string };
+  const payload = (await response.json()) as Record<string, unknown> & { error?: string };
   if (!response.ok) {
     throw new Error(payload.error ?? `Asset Hub request failed with ${response.status}`);
   }
-  return payload.results ?? [];
+  return payload;
 }
 
 function sanitizeBody(body: Record<string, unknown>): Record<string, unknown> {

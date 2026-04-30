@@ -4,7 +4,16 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { buildAttribution } from "./attribution.js";
 import { downloadAsset, installAssetFiles } from "./download.js";
-import { applyArgEnv, assertHostedConfigured, getHostedConfig, hostedGetAsset, hostedListLicenses, hostedSearchAssetFiles, hostedSearchAssets } from "./hosted-client.js";
+import {
+  applyArgEnv,
+  assertHostedConfigured,
+  getHostedConfig,
+  hostedGetAsset,
+  hostedGetCatalogOptions,
+  hostedListLicenses,
+  hostedSearchAssetFiles,
+  hostedSearchAssets,
+} from "./hosted-client.js";
 import { writeProjectMetadata } from "./metadata.js";
 import type { AssetRecord, AssetType, HostedFileResult, LicenseId } from "./types.js";
 
@@ -60,7 +69,7 @@ const installFilesInputSchema = {
 
 const server = new McpServer({
   name: "assethub-mcp",
-  version: "0.1.0",
+  version: "0.1.1",
 });
 
 server.registerTool(
@@ -71,8 +80,8 @@ server.registerTool(
     inputSchema: searchInputSchema,
   },
   async (input) => {
-    const results = await hostedSearchAssets(toSearchFilters(input), hostedConfig);
-    return jsonResponse({ source: "hosted", results });
+    const payload = await hostedSearchAssets(toSearchFilters(input), hostedConfig);
+    return jsonResponse({ source: "hosted", ...payload });
   },
 );
 
@@ -84,7 +93,7 @@ server.registerTool(
     inputSchema: fileSearchInputSchema,
   },
   async (input) => {
-    const results = await hostedSearchAssetFiles(
+    const payload = await hostedSearchAssetFiles(
       {
         ...toSearchFilters(input),
         assetIds: input.assetIds,
@@ -93,7 +102,7 @@ server.registerTool(
       },
       hostedConfig,
     );
-    return jsonResponse({ source: "hosted", results });
+    return jsonResponse({ source: "hosted", ...payload });
   },
 );
 
@@ -171,14 +180,15 @@ server.registerTool(
     },
   },
   async (input) => {
-    const fileResults = (await hostedSearchAssetFiles(
+    const searchPayload = await hostedSearchAssetFiles(
       {
         ...toSearchFilters(input),
         includePreviews: input.includePreviews,
         limit: input.maxFiles ?? 10,
       },
       hostedConfig,
-    )) as HostedFileResult[];
+    );
+    const fileResults = arrayValue(searchPayload.results) as HostedFileResult[];
     const assetId = fileResults.find((result) => result.asset?.id)?.asset?.id;
     if (!assetId) {
       return jsonResponse({ installed: false, reason: "No matching asset files found under the current filters." });
@@ -237,6 +247,16 @@ server.registerTool(
       missing,
     });
   },
+);
+
+server.registerTool(
+  "browse_catalog_options",
+  {
+    title: "Browse Catalog Options",
+    description: "List available catalog categories, sources, use cases, and query ideas for the current Asset Hub plan.",
+    inputSchema: {},
+  },
+  async () => jsonResponse(await hostedGetCatalogOptions(hostedConfig)),
 );
 
 server.registerTool(
@@ -305,4 +325,8 @@ function jsonResponse(value: unknown) {
       },
     ],
   };
+}
+
+function arrayValue(value: unknown): unknown[] {
+  return Array.isArray(value) ? value : [];
 }

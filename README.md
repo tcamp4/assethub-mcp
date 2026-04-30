@@ -12,6 +12,7 @@ This repository intentionally contains only the installable MCP client. The host
 - `install_asset_files` - Install exact files returned by file search.
 - `install_best_asset` - Search and install the best matching files in one call.
 - `get_attribution` - Generate attribution text and JSON metadata for selected assets.
+- `browse_catalog_options` - Show categories, sources, use cases, and example queries available to the current plan.
 - `list_licenses` - Show supported license policies and safe defaults.
 
 ## Install
@@ -78,6 +79,7 @@ The hosted API stays private, but the client talks to a small documented JSON co
 - `POST /v1/search`
 - `POST /v1/files/search`
 - `GET /v1/assets/:assetId`
+- `GET /v1/catalog/options`
 - `GET /v1/licenses`
 
 All hosted requests use:
@@ -105,6 +107,8 @@ Authorization: Bearer ah_your_customer_key
 ```
 
 `search_asset_files` may return `lockedAssetResults` for above-plan packs when no accessible file results are found.
+
+Use `browse_catalog_options` when an agent needs to discover what the catalog can answer before searching. It returns plan-specific categories, source names, curated use cases, and example queries such as `short menu click`, `cozy farming sprites`, `hex strategy tiles`, and `low poly furniture props`.
 
 ## Claude Code
 
