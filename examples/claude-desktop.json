@@ -2,7 +2,7 @@
   "mcpServers": {
     "asset-hub": {
       "command": "npx",
-      "args": ["@tcamp404/assethub-mcp"],
+      "args": ["-y", "@tcamp404/assethub-mcp@latest"],
       "env": {
         "ASSET_HUB_API_KEY": "ah_your_customer_key",
         "ASSET_HUB_API_BASE_URL": "https://assethubmcp.com"

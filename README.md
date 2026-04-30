@@ -17,7 +17,7 @@ This repository intentionally contains only the installable MCP client. The host
 ## Install
 
 ```bash
-npx @tcamp404/assethub-mcp ASSET_HUB_API_KEY=ah_your_customer_key
+npx -y @tcamp404/assethub-mcp@latest ASSET_HUB_API_KEY=ah_your_customer_key
 ```
 
 `ASSET_HUB_API_BASE_URL` defaults to `https://assethubmcp.com`.
@@ -29,7 +29,7 @@ npx @tcamp404/assethub-mcp ASSET_HUB_API_KEY=ah_your_customer_key
   "mcpServers": {
     "asset-hub": {
       "command": "npx",
-      "args": ["@tcamp404/assethub-mcp"],
+      "args": ["-y", "@tcamp404/assethub-mcp@latest"],
       "env": {
         "ASSET_HUB_API_KEY": "ah_your_customer_key",
         "ASSET_HUB_API_BASE_URL": "https://assethubmcp.com"
@@ -70,6 +70,50 @@ For exact file installs:
 ```
 
 Then pass the returned `asset.id` and `file.entryPath` values to `install_asset_files`.
+
+## Hosted API Contract
+
+The hosted API stays private, but the client talks to a small documented JSON contract:
+
+- `POST /v1/search`
+- `POST /v1/files/search`
+- `GET /v1/assets/:assetId`
+- `GET /v1/licenses`
+
+All hosted requests use:
+
+```http
+Authorization: Bearer ah_your_customer_key
+```
+
+`search_assets` may return locked upgrade matches when the current plan is too small:
+
+```json
+{
+  "results": [],
+  "lockedResults": [
+    {
+      "id": "kenney-music-jingles",
+      "title": "Kenney Music Jingles",
+      "accessible": false,
+      "upgradeRequired": "indie",
+      "minimumPlan": "indie"
+    }
+  ],
+  "plan": "free"
+}
+```
+
+`search_asset_files` may return `lockedAssetResults` for above-plan packs when no accessible file results are found.
+
+## Claude Code
+
+```bash
+claude mcp add --transport stdio asset-hub --scope user \
+  --env ASSET_HUB_API_KEY=ah_your_customer_key \
+  --env ASSET_HUB_API_BASE_URL=https://assethubmcp.com \
+  -- npx -y @tcamp404/assethub-mcp@latest
+```
 
 ## Development
 

@@ -2,7 +2,7 @@
   "name": "io.github.tcamp4/assethub-mcp",
   "description": "Hosted Asset Hub MCP client for searching and installing game assets.",
   "command": "npx",
-  "args": ["@tcamp404/assethub-mcp"],
+  "args": ["-y", "@tcamp404/assethub-mcp@latest"],
   "env": {
     "ASSET_HUB_API_KEY": "ah_your_customer_key",
     "ASSET_HUB_API_BASE_URL": "https://assethubmcp.com"
