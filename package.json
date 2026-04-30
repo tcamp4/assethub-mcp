@@ -1,0 +1,57 @@
+{
+  "name": "@tcamp404/assethub-mcp",
+  "version": "0.1.0",
+  "description": "Hosted Asset Hub MCP client for AI coding agents to search, install, and credit game assets.",
+  "mcpName": "io.github.tcamp4/assethub-mcp",
+  "type": "module",
+  "bin": {
+    "assethub-mcp": "dist/server.js",
+    "asset-hub-mcp": "dist/server.js"
+  },
+  "files": [
+    "dist",
+    "examples",
+    "server.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run typecheck",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "mcp",
+    "asset-mcp",
+    "ai-assets",
+    "game-assets",
+    "sounds",
+    "sprites",
+    "codex",
+    "claude-code",
+    "cursor"
+  ],
+  "homepage": "https://assethubmcp.com/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tcamp4/assethub-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tcamp4/assethub-mcp/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "adm-zip": "^0.5.16",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
