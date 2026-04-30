@@ -33,6 +33,13 @@ export interface AssetRecord {
 export interface SearchFilters {
   type?: AssetType;
   query?: string;
+  gameContext?: string;
+  gameGenre?: string;
+  mood?: string;
+  visualStyle?: string;
+  intendedUse?: string;
+  prefer?: string[];
+  avoid?: string[];
   tags?: string[];
   licenses?: LicenseId[];
   formats?: string[];

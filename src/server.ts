@@ -27,6 +27,13 @@ const licenseSchema = z.enum(["CC0-1.0", "CC-BY-4.0", "UNKNOWN"]);
 const searchInputSchema = {
   type: assetTypeSchema.optional().describe("Preferred asset type."),
   query: z.string().optional().describe("Natural-language need, such as 'short menu click blip'."),
+  gameContext: z.string().optional().describe("Short description of the game, scene, or mechanic this asset must fit."),
+  gameGenre: z.string().optional().describe("Game genre or subgenre, such as cozy farming, horror RPG, sci-fi shooter, puzzle, or racing."),
+  mood: z.string().optional().describe("Desired feel, such as cozy, cute, tense, dark, playful, retro, or futuristic."),
+  visualStyle: z.string().optional().describe("Target art style, such as pixel, low-poly, cartoon, monochrome, hand-drawn, or realistic."),
+  intendedUse: z.string().optional().describe("How the asset will be used, such as background loop, menu confirm, NPC, enemy, inventory icon, or terrain tile."),
+  prefer: z.array(z.string()).optional().describe("Extra concepts to reward when ranking matches."),
+  avoid: z.array(z.string()).optional().describe("Concepts to penalize, such as horror, sci-fi, cartoon, loud, weapon, or preview."),
   tags: z.array(z.string()).optional().describe("Explicit tags to match."),
   licenses: z.array(licenseSchema).optional().describe("Allowed licenses. Defaults to CC0-1.0 only."),
   formats: z.array(z.string()).optional().describe("Allowed file extensions, such as .wav, .ogg, .png, .svg."),
@@ -69,7 +76,7 @@ const installFilesInputSchema = {
 
 const server = new McpServer({
   name: "assethub-mcp",
-  version: "0.1.1",
+  version: "0.1.2",
 });
 
 server.registerTool(
@@ -183,19 +190,20 @@ server.registerTool(
     const searchPayload = await hostedSearchAssetFiles(
       {
         ...toSearchFilters(input),
+        formats: input.formats ?? input.includeExtensions,
         includePreviews: input.includePreviews,
         limit: input.maxFiles ?? 10,
       },
       hostedConfig,
     );
     const fileResults = arrayValue(searchPayload.results) as HostedFileResult[];
-    const assetId = fileResults.find((result) => result.asset?.id)?.asset?.id;
-    if (!assetId) {
+    const bestGroup = chooseBestAssetFileGroup(fileResults);
+    if (!bestGroup) {
       return jsonResponse({ installed: false, reason: "No matching asset files found under the current filters." });
     }
 
-    const asset = await hostedGetAsset(assetId, hostedConfig);
-    const entryPaths = fileResults.map((result) => result.file?.entryPath).filter((entryPath): entryPath is string => Boolean(entryPath));
+    const asset = await hostedGetAsset(bestGroup.assetId, hostedConfig);
+    const entryPaths = bestGroup.files.map((result) => result.file?.entryPath).filter((entryPath): entryPath is string => Boolean(entryPath));
     const result =
       entryPaths.length > 0 && input.extract !== false
         ? await installAssetFiles(asset, {
@@ -217,7 +225,7 @@ server.registerTool(
     return jsonResponse({
       installed: true,
       match: assetSummary(asset),
-      selectedFiles: fileResults.map((fileResult) => ({
+      selectedFiles: bestGroup.files.map((fileResult) => ({
         entryPath: fileResult.file?.entryPath,
         score: fileResult.score,
         matched: fileResult.matched,
@@ -275,6 +283,13 @@ await server.connect(transport);
 function toSearchFilters(input: {
   type?: AssetType;
   query?: string;
+  gameContext?: string;
+  gameGenre?: string;
+  mood?: string;
+  visualStyle?: string;
+  intendedUse?: string;
+  prefer?: string[];
+  avoid?: string[];
   tags?: string[];
   licenses?: LicenseId[];
   formats?: string[];
@@ -285,6 +300,13 @@ function toSearchFilters(input: {
   return {
     type: input.type,
     query: input.query,
+    gameContext: input.gameContext,
+    gameGenre: input.gameGenre,
+    mood: input.mood,
+    visualStyle: input.visualStyle,
+    intendedUse: input.intendedUse,
+    prefer: input.prefer,
+    avoid: input.avoid,
     tags: input.tags,
     licenses: input.licenses,
     formats: input.formats,
@@ -329,4 +351,28 @@ function jsonResponse(value: unknown) {
 
 function arrayValue(value: unknown): unknown[] {
   return Array.isArray(value) ? value : [];
+}
+
+function chooseBestAssetFileGroup(fileResults: HostedFileResult[]): { assetId: string; files: HostedFileResult[] } | undefined {
+  const grouped = new Map<string, HostedFileResult[]>();
+  for (const result of fileResults) {
+    const assetId = result.asset?.id ?? result.file?.assetId;
+    const entryPath = result.file?.entryPath;
+    if (!assetId || !entryPath) {
+      continue;
+    }
+    const files = grouped.get(assetId) ?? [];
+    files.push(result);
+    grouped.set(assetId, files);
+  }
+
+  let best: { assetId: string; files: HostedFileResult[]; score: number } | undefined;
+  for (const [assetId, files] of grouped) {
+    const score = files.reduce((total, file) => total + (typeof file.score === "number" ? file.score : 0), 0);
+    if (!best || score > best.score || (score === best.score && files.length > best.files.length)) {
+      best = { assetId, files, score };
+    }
+  }
+
+  return best ? { assetId: best.assetId, files: best.files } : undefined;
 }

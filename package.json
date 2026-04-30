@@ -1,6 +1,6 @@
 {
   "name": "@tcamp404/assethub-mcp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Hosted Asset Hub MCP client for AI coding agents to search, install, and credit game assets.",
   "mcpName": "io.github.tcamp4/assethub-mcp",
   "type": "module",

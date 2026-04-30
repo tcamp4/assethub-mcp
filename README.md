@@ -6,8 +6,8 @@ This repository intentionally contains only the installable MCP client. The host
 
 ## Tools
 
-- `search_assets` - Search by type, query, tags, license, format, and source.
-- `search_asset_files` - Search inside archives for exact files such as `click_001.ogg`.
+- `search_assets` - Search by type, query, tags, license, format, source, and game-fit hints.
+- `search_asset_files` - Search inside archives for exact files such as `click_001.ogg`, with ranking hints for game genre, mood, style, use case, and avoided concepts.
 - `download_asset` - Download and extract an authorized asset pack into a target directory.
 - `install_asset_files` - Install exact files returned by file search.
 - `install_best_asset` - Search and install the best matching files in one call.
@@ -48,6 +48,10 @@ npx -y @tcamp404/assethub-mcp@latest ASSET_HUB_API_KEY=ah_your_customer_key
   "arguments": {
     "type": "sound",
     "query": "short menu click UI blip",
+    "gameGenre": "cozy farming",
+    "mood": "soft friendly",
+    "intendedUse": "menu confirm",
+    "avoid": ["horror", "weapon", "loud"],
     "targetDir": "public/audio/ui",
     "projectRoot": "/path/to/game",
     "includeExtensions": [".wav", ".ogg"],
@@ -64,6 +68,8 @@ For exact file installs:
   "arguments": {
     "type": "sound",
     "query": "short menu click",
+    "gameContext": "cozy farming game main menu",
+    "intendedUse": "short menu confirm",
     "formats": [".ogg"],
     "limit": 3
   }
@@ -71,6 +77,15 @@ For exact file installs:
 ```
 
 Then pass the returned `asset.id` and `file.entryPath` values to `install_asset_files`.
+
+For better matches, agents should pass fit hints whenever the game context matters:
+
+- `gameContext`: short description of the game, level, scene, or mechanic.
+- `gameGenre`: examples include `cozy farming`, `fantasy RPG`, `sci-fi shooter`, `puzzle`, or `racing`.
+- `mood`: examples include `cute`, `tense`, `dark`, `friendly`, `retro`, or `futuristic`.
+- `visualStyle`: examples include `pixel`, `low-poly`, `cartoon`, `monochrome`, or `hand-drawn`.
+- `intendedUse`: examples include `background loop`, `menu confirm`, `NPC`, `enemy`, `inventory icon`, or `terrain tile`.
+- `prefer` and `avoid`: extra concepts to reward or penalize.
 
 ## Hosted API Contract
 
