@@ -8,6 +8,7 @@ This repository intentionally contains only the installable MCP client. The host
 
 - `search_assets` - Search by type, query, tags, license, format, source, and game-fit hints.
 - `search_asset_files` - Search inside archives for exact files such as `click_001.ogg`, with ranking hints for game genre, mood, style, use case, and avoided concepts.
+- `recommend_assets_for_game` - Turn a game idea into a curated starter kit with categories, fit reasons, exact file suggestions, target directories, and install calls.
 - `download_asset` - Download and extract an authorized asset pack into a target directory.
 - `install_asset_files` - Install exact files returned by file search.
 - `install_best_asset` - Search and install the best matching files in one call.
@@ -41,6 +42,24 @@ npx -y @tcamp404/assethub-mcp@latest ASSET_HUB_API_KEY=ah_your_customer_key
 ```
 
 ## Example Agent Flow
+
+Start with a recommendation when the game concept is broader than one exact asset:
+
+```json
+{
+  "tool": "recommend_assets_for_game",
+  "arguments": {
+    "gameDescription": "A cozy farming game with crops, animals, shop menus, and gentle reward sounds.",
+    "gameGenre": "cozy farming",
+    "mood": "soft friendly",
+    "visualStyle": "pixel 2d",
+    "avoid": ["horror", "weapon", "sci-fi"],
+    "maxCategories": 5
+  }
+}
+```
+
+The response includes a selected kit, recommended categories, best matching packs/files, target directories, and ready-to-run `install_best_asset` arguments.
 
 ```json
 {
@@ -95,6 +114,8 @@ The hosted API stays private, but the client talks to a small documented JSON co
 - `POST /v1/files/search`
 - `GET /v1/assets/:assetId`
 - `GET /v1/catalog/options`
+- `GET /v1/catalog/kits`
+- `POST /v1/recommendations/game`
 - `GET /v1/licenses`
 
 All hosted requests use:
@@ -124,6 +145,8 @@ Authorization: Bearer ah_your_customer_key
 `search_asset_files` may return `lockedAssetResults` for above-plan packs when no accessible file results are found.
 
 Use `browse_catalog_options` when an agent needs to discover what the catalog can answer before searching. It returns plan-specific categories, source names, curated use cases, and example queries such as `short menu click`, `cozy farming sprites`, `hex strategy tiles`, and `low poly furniture props`.
+
+Use `recommend_assets_for_game` when the prompt is a whole game or prototype. Current curated kits include cozy farming, fantasy RPG, platformer, space shooter, puzzle/casual, and a general prototype fallback.
 
 ## Claude Code
 

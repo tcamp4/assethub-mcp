@@ -11,6 +11,7 @@ import {
   hostedGetAsset,
   hostedGetCatalogOptions,
   hostedListLicenses,
+  hostedRecommendAssetsForGame,
   hostedSearchAssetFiles,
   hostedSearchAssets,
 } from "./hosted-client.js";
@@ -76,8 +77,42 @@ const installFilesInputSchema = {
 
 const server = new McpServer({
   name: "assethub-mcp",
-  version: "0.1.2",
+  version: "0.1.3",
 });
+
+server.registerTool(
+  "recommend_assets_for_game",
+  {
+    title: "Recommend Assets For Game",
+    description:
+      "Turn a game idea into a curated asset plan with categories, best packs, exact file suggestions, target directories, and install_best_asset calls.",
+    inputSchema: {
+      gameDescription: z.string().describe("A short description of the game, prototype, or scene being built."),
+      requestedKit: z
+        .enum(["cozy-farming", "fantasy-rpg", "platformer", "space-shooter", "puzzle-casual", "general-prototype"])
+        .optional()
+        .describe("Optional curated kit to force. Omit to let Asset Hub infer it."),
+      ...searchInputSchema,
+      maxCategories: z.number().int().min(1).max(8).optional().describe("How many asset categories to recommend."),
+      maxResultsPerCategory: z.number().int().min(1).max(8).optional().describe("How many results to include per category."),
+      includeFiles: z.boolean().optional().describe("Include exact file-level picks when useful. Defaults to true."),
+    },
+  },
+  async (input) => {
+    const payload = await hostedRecommendAssetsForGame(
+      {
+        ...toSearchFilters(input),
+        gameDescription: input.gameDescription,
+        requestedKit: input.requestedKit,
+        maxCategories: input.maxCategories,
+        maxResultsPerCategory: input.maxResultsPerCategory,
+        includeFiles: input.includeFiles,
+      },
+      hostedConfig,
+    );
+    return jsonResponse({ source: "hosted", ...payload });
+  },
+);
 
 server.registerTool(
   "search_assets",

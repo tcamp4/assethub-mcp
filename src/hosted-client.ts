@@ -1,4 +1,4 @@
-import type { AssetRecord, FileSearchFilters, SearchFilters } from "./types.js";
+import type { AssetRecord, FileSearchFilters, GameRecommendationInput, SearchFilters } from "./types.js";
 
 export interface HostedConfig {
   apiKey?: string;
@@ -35,6 +35,10 @@ export async function hostedSearchAssets(filters: SearchFilters, config = getHos
 
 export async function hostedSearchAssetFiles(filters: FileSearchFilters, config = getHostedConfig()): Promise<Record<string, unknown>> {
   return hostedPost("/v1/files/search", filters, config);
+}
+
+export async function hostedRecommendAssetsForGame(input: GameRecommendationInput, config = getHostedConfig()): Promise<Record<string, unknown>> {
+  return hostedPost("/v1/recommendations/game", input, config);
 }
 
 export async function hostedGetAsset(assetId: string, config = getHostedConfig()): Promise<AssetRecord> {

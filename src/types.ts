@@ -54,6 +54,14 @@ export interface FileSearchFilters extends SearchFilters {
   includePreviews?: boolean;
 }
 
+export interface GameRecommendationInput extends SearchFilters {
+  gameDescription?: string;
+  requestedKit?: string;
+  maxCategories?: number;
+  maxResultsPerCategory?: number;
+  includeFiles?: boolean;
+}
+
 export interface HostedFileResult {
   asset?: {
     id?: string;
