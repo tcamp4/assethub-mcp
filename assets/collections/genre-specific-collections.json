@@ -1,0 +1,158 @@
+{
+  "collection_id": "genre_specific_collections",
+  "title": "Specialized Genre Collections",
+  "description": "Curated asset packs for specific game genres that Kenney's general style doesn't serve optimally",
+  "category": "specialized_genres", 
+  "minimum_plan": "pro",
+  "genre_count": 5,
+  "total_assets": 95,
+  "underserved_genres": ["horror_psychological", "cyberpunk_neon", "realistic_military", "anime_jrpg", "authentic_retro"],
+  "differentiates_from": "kenney_general_style",
+  "genre_collections": [
+    {
+      "genre_id": "horror_psychological",
+      "title": "Horror & Psychological Thriller Pack",
+      "description": "Dark, creepy assets for mature horror games - atmosphere Kenney's cute style can't provide",
+      "why_not_kenney": "Kenney's cheerful cartoon style is completely wrong for horror atmosphere",
+      "target_games": ["Horror", "Psychological thriller", "Survival horror", "Dark atmospheric"],
+      "mood_requirements": ["dark", "creepy", "tense", "mature", "unsettling"],
+      "sample_assets": [
+        {
+          "id": "horror_ambient_001",
+          "title": "Psychological Tension Soundscape",
+          "type": "audio",
+          "description": "Deep atmospheric drones with subtle dissonance - builds dread without jump scares",
+          "tags": ["horror", "ambient", "psychological", "tension", "atmosphere"]
+        },
+        {
+          "id": "creepy_mansion_tiles_002", 
+          "title": "Abandoned Mansion Tileset",
+          "type": "2d",
+          "description": "Decaying Victorian mansion interiors with peeling wallpaper and broken furniture", 
+          "tags": ["mansion", "decay", "gothic", "abandoned", "creepy"]
+        },
+        {
+          "id": "shadow_creature_003",
+          "title": "Shadow Entity Sprites",
+          "type": "2d", 
+          "description": "Mysterious shadow creatures with glowing eyes - genuinely unsettling character design",
+          "tags": ["shadow", "creature", "horror", "entity", "glowing eyes"]
+        }
+      ]
+    },
+    {
+      "genre_id": "cyberpunk_neon",
+      "title": "Cyberpunk & Neon Aesthetics Pack", 
+      "description": "Gritty futuristic assets with neon lighting - mature sci-fi that needs edge",
+      "why_not_kenney": "Kenney's clean style lacks the gritty, dirty cyberpunk aesthetic", 
+      "target_games": ["Cyberpunk", "Dystopian sci-fi", "Neon noir", "Tech thriller"],
+      "mood_requirements": ["gritty", "neon", "futuristic", "dark tech", "urban decay"],
+      "sample_assets": [
+        {
+          "id": "neon_synthwave_001",
+          "title": "Dark Synthwave Tracks",
+          "type": "audio",
+          "description": "Moody electronic music with heavy bass - captures cyberpunk atmosphere perfectly",
+          "tags": ["synthwave", "cyberpunk", "electronic", "dark", "neon"]
+        },
+        {
+          "id": "cyber_hud_002",
+          "title": "Holographic Interface Elements", 
+          "type": "2d",
+          "description": "Glowing cyan UI elements with scan lines and digital glitches",
+          "tags": ["cyberpunk", "hud", "holographic", "glowing", "interface"]
+        },
+        {
+          "id": "neon_city_003",
+          "title": "Rain-Soaked Neon Street Tiles",
+          "type": "2d",
+          "description": "Urban decay with neon reflections on wet asphalt - classic cyberpunk environment", 
+          "tags": ["neon", "city", "rain", "urban", "reflections"]
+        }
+      ]
+    },
+    {
+      "genre_id": "realistic_military",
+      "title": "Realistic Military & Tactical Pack",
+      "description": "Authentic military assets for serious tactical games - realism Kenney can't provide",
+      "why_not_kenney": "Kenney's cartoon style makes military themes look like toys rather than serious tactical games",
+      "target_games": ["Military simulation", "Tactical shooter", "War strategy", "Realistic combat"],
+      "mood_requirements": ["realistic", "serious", "tactical", "military", "gritty"],
+      "sample_assets": [
+        {
+          "id": "realistic_gunfire_001", 
+          "title": "Authentic Weapon Sound Library",
+          "type": "audio",
+          "description": "High-fidelity weapon sounds recorded from real firearms - professional military audio",
+          "tags": ["gunfire", "realistic", "military", "weapons", "tactical"]
+        },
+        {
+          "id": "tactical_soldier_002",
+          "title": "Modern Soldier Sprite Set",
+          "type": "2d",
+          "description": "Photorealistic soldiers with proper military gear and authentic camouflage patterns",
+          "tags": ["soldier", "military", "realistic", "tactical", "camouflage"]
+        }
+      ]
+    },
+    {
+      "genre_id": "anime_jrpg", 
+      "title": "Anime & JRPG Aesthetics Pack",
+      "description": "Authentic Japanese game art style - completely different aesthetic from Western cartoon style",
+      "why_not_kenney": "Kenney's Western cartoon style vs authentic Japanese anime aesthetic - different cultural art traditions",
+      "target_games": ["JRPG", "Anime games", "Visual novels", "Kawaii games"],
+      "mood_requirements": ["cute", "anime", "colorful", "expressive", "kawaii"],
+      "sample_assets": [
+        {
+          "id": "jrpg_battle_music_001",
+          "title": "Orchestral JRPG Battle Themes", 
+          "type": "audio",
+          "description": "Epic orchestral music in classic JRPG style - captures Final Fantasy / Dragon Quest feel",
+          "tags": ["JRPG", "orchestral", "battle", "epic", "japanese"]
+        },
+        {
+          "id": "anime_character_002",
+          "title": "Anime Character Portrait Set",
+          "type": "2d", 
+          "description": "Large-eyed expressive anime characters with Japanese art style conventions",
+          "tags": ["anime", "character", "portrait", "expressive", "japanese"]
+        }
+      ]
+    },
+    {
+      "genre_id": "authentic_retro",
+      "title": "Authentic 8-Bit/16-Bit Retro Pack",
+      "description": "Period-accurate retro assets with authentic limitations - not modern 'retro-inspired'",
+      "why_not_kenney": "Kenney's modern clean style vs authentic retro with period-accurate color limitations and pixel restrictions", 
+      "target_games": ["NES-style", "Game Boy style", "Authentic retro", "Demake projects"],
+      "mood_requirements": ["nostalgic", "authentic", "limited palette", "classic", "period-accurate"],
+      "sample_assets": [
+        {
+          "id": "authentic_chiptune_001",
+          "title": "NES-Accurate Chiptune Music",
+          "type": "audio", 
+          "description": "Music created with actual NES sound chip limitations - authentic 8-bit sound",
+          "tags": ["chiptune", "NES", "8bit", "authentic", "retro"]
+        },
+        {
+          "id": "gameboy_sprites_002",
+          "title": "Game Boy Palette Sprite Set",
+          "type": "2d",
+          "description": "Sprites using authentic Game Boy 4-shade green palette - period-accurate pixel art",
+          "tags": ["gameboy", "green", "4color", "authentic", "retro"]
+        }
+      ]
+    }
+  ],
+  "market_analysis": {
+    "kenney_strength": "Excellent for general indie games, consistent style, high quality",
+    "kenney_limitation": "Single aesthetic doesn't serve specialized genres that need specific moods/styles",
+    "this_collection_value": "Serves niche markets that pay premium for genre-appropriate assets",
+    "competitive_advantage": "No other service offers curated genre-specific collections at this price point"
+  },
+  "pro_tier_justification": {
+    "specialized_content": "Genre-specific assets command higher prices due to specialized nature",
+    "target_audience_expansion": "Attracts developers working on mature/specialized games", 
+    "unique_positioning": "Only comprehensive genre collection available via subscription model"
+  }
+}

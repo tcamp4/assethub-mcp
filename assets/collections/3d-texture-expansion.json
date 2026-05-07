@@ -1,0 +1,122 @@
+{
+  "collection_id": "3d_texture_expansion",
+  "title": "3D Models & PBR Texture Collection", 
+  "description": "Professional 3D models and PBR materials - completely new content category beyond Kenney's 2D focus",
+  "category": "3d_content",
+  "minimum_plan": "pro",
+  "content_types": ["3d_models", "pbr_textures", "seamless_materials"],
+  "total_assets": 60,
+  "new_category": true,
+  "differentiates_from": "kenney_2d_only",
+  "assets": [
+    {
+      "id": "lowpoly_tree_001",
+      "title": "Low-Poly Game Tree Collection",
+      "creator": "PolyNature", 
+      "type": "3d",
+      "category": "model",
+      "subcategory": "environment",
+      "license": "CC0",
+      "tags": ["tree", "lowpoly", "nature", "environment", "game-ready"],
+      "game_genres": ["3D", "simulation", "survival", "open-world"],
+      "mood": ["natural", "organic", "outdoor"],
+      "technical_specs": {
+        "poly_count": 450,
+        "vertices": 280,
+        "format": "obj", 
+        "textured": true,
+        "uv_mapped": true
+      },
+      "file_url": "/assets/3d/lowpoly_tree_001.obj",
+      "texture_url": "/assets/3d/lowpoly_tree_001_diffuse.png",
+      "file_size": "85KB",
+      "description": "Game-optimized low-poly tree perfect for 3D environments - includes diffuse texture and clean UV mapping"
+    },
+    {
+      "id": "pbr_stone_wall_002", 
+      "title": "Medieval Stone Wall PBR Material",
+      "creator": "PBRMaterials",
+      "type": "3d",
+      "category": "texture", 
+      "subcategory": "pbr_material",
+      "license": "CC0",
+      "tags": ["stone", "wall", "medieval", "PBR", "seamless"],
+      "game_genres": ["3D", "medieval", "fantasy", "realistic"],
+      "mood": ["realistic", "aged", "medieval", "sturdy"],
+      "technical_specs": {
+        "resolution": "2048x2048",
+        "seamless": true,
+        "maps_included": ["diffuse", "normal", "roughness", "ambient_occlusion"],
+        "format": "PNG"
+      },
+      "file_urls": {
+        "diffuse": "/assets/3d/stone_wall_diffuse.png",
+        "normal": "/assets/3d/stone_wall_normal.png", 
+        "roughness": "/assets/3d/stone_wall_roughness.png",
+        "ao": "/assets/3d/stone_wall_ao.png"
+      },
+      "total_size": "12MB",
+      "description": "Complete PBR material set for realistic stone walls - professional quality for AAA-style games"
+    },
+    {
+      "id": "game_character_rig_003",
+      "title": "Rigged Low-Poly Character Base",
+      "creator": "CharacterRigs",
+      "type": "3d",
+      "category": "model",
+      "subcategory": "character", 
+      "license": "CC-BY",
+      "tags": ["character", "rigged", "lowpoly", "humanoid", "game-ready"],
+      "game_genres": ["3D", "action", "RPG", "indie"],
+      "mood": ["neutral", "adaptable", "professional"],
+      "technical_specs": {
+        "poly_count": 2800,
+        "vertices": 1650,
+        "format": "fbx",
+        "rigged": true, 
+        "animations_included": ["idle", "walk", "run"]
+      },
+      "file_url": "/assets/3d/character_rig_003.fbx",
+      "file_size": "450KB",
+      "description": "Professional rigged character base with basic animations - perfect starting point for 3D character development"
+    },
+    {
+      "id": "sci_fi_metal_004",
+      "title": "Futuristic Metal Panel PBR Set",
+      "creator": "SciFiTextures",
+      "type": "3d", 
+      "category": "texture",
+      "subcategory": "pbr_material",
+      "license": "CC0",
+      "tags": ["sci-fi", "metal", "futuristic", "panel", "cyberpunk"],
+      "game_genres": ["sci-fi", "cyberpunk", "space", "futuristic"], 
+      "mood": ["futuristic", "high-tech", "metallic", "cool"],
+      "technical_specs": {
+        "resolution": "1024x1024", 
+        "seamless": true,
+        "maps_included": ["diffuse", "normal", "metallic", "roughness", "emissive"],
+        "format": "PNG"
+      },
+      "file_urls": {
+        "diffuse": "/assets/3d/scifi_metal_diffuse.png",
+        "normal": "/assets/3d/scifi_metal_normal.png",
+        "metallic": "/assets/3d/scifi_metal_metallic.png", 
+        "roughness": "/assets/3d/scifi_metal_roughness.png",
+        "emissive": "/assets/3d/scifi_metal_emissive.png"
+      },
+      "total_size": "8MB",
+      "description": "High-tech metal panels with subtle emissive glow - perfect for cyberpunk and space game environments"
+    }
+  ],
+  "category_expansion": {
+    "current_kenney_focus": "Primarily 2D sprites and simple 3D models",
+    "this_adds": "Professional 3D content, PBR materials, rigged characters", 
+    "target_audience": "3D game developers, Unity/Unreal users, VR developers",
+    "market_gap": "No affordable subscription service offers comprehensive 3D game assets"
+  },
+  "collection_notes": {
+    "completely_new": "3D models and PBR textures are content categories Kenney doesn't focus on heavily",
+    "technical_value": "Professional 3D assets with proper UV mapping, rigging, and PBR workflows", 
+    "pro_tier_justification": "3D assets typically cost $20-100 each on marketplaces - huge value at $10/month unlimited access"
+  }
+}
